@@ -17,6 +17,109 @@
             color: #2c3e50;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(52, 152, 219, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(155, 89, 182, 0.08) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+            animation: backgroundPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.8;
+                transform: scale(1.1);
+            }
+        }
+
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .geometric-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .geometric-bg::before,
+        .geometric-bg::after {
+            content: '';
+            position: absolute;
+            border: 2px solid rgba(52, 152, 219, 0.1);
+            animation: rotate 20s linear infinite;
+        }
+
+        .geometric-bg::before {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            right: 10%;
+            border-radius: 30%;
+        }
+
+        .geometric-bg::after {
+            width: 200px;
+            height: 200px;
+            bottom: 15%;
+            left: 5%;
+            border-radius: 40%;
+            animation-direction: reverse;
+            animation-duration: 25s;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg) scale(1);
+            }
+            50% {
+                transform: rotate(180deg) scale(1.1);
+            }
+            100% {
+                transform: rotate(360deg) scale(1);
+            }
         }
 
         header {
@@ -29,6 +132,24 @@
             z-index: 1000;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
             animation: slideDown 0.5s ease-out;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3498db, #9b59b6);
+            animation: headerLine 2s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes headerLine {
+            to {
+                width: 100%;
+            }
         }
 
         @keyframes slideDown {
@@ -118,7 +239,22 @@
         .hero h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
-            color: #2c3e50;
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 50%, #9b59b6 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite;
+            filter: drop-shadow(0 0 20px rgba(52, 152, 219, 0.3));
+        }
+
+        @keyframes gradientShift {
+            0%, 100% {
+                background-position: 0% center;
+            }
+            50% {
+                background-position: 100% center;
+            }
         }
 
         .hero h2 {
@@ -178,6 +314,8 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 4rem 2rem;
+            position: relative;
+            z-index: 2;
         }
 
         .section-title {
@@ -212,8 +350,48 @@
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
             animation: fadeIn 0.8s ease-out;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #3498db, #9b59b6, #3498db);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+            background-size: 200% 200%;
+            animation: gradientMove 3s ease infinite;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .skill-category::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: white;
+            border-radius: 13px;
+            z-index: -1;
         }
 
         @keyframes fadeIn {
@@ -229,7 +407,11 @@
 
         .skill-category:hover {
             transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+        }
+
+        .skill-category:hover::before {
+            opacity: 1;
         }
 
         .skill-category h3 {
@@ -256,11 +438,27 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
             animation: fadeIn 0.8s ease-out;
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(52, 152, 219, 0.1), transparent);
+            transition: left 0.5s ease;
         }
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 40px rgba(52, 152, 219, 0.3);
+        }
+
+        .project-card:hover::before {
+            left: 100%;
         }
 
         .project-content {
@@ -568,10 +766,11 @@
                 <div class="project-content">
                     <h3>Sign Language Translator</h3>
                     <ul>
-                        <li>Python, Machine Learning, Deep Learning, OpenCV</li>
-                        <li>Webcam-based hand movement detection and tracking system</li>
+                        <li>Python, ML, Deep Learning, OpenCV, Google Collab</li>
+                        <li>Uses webcam to detect and track hand movements and gestures in real time</li>
+                        <li>Machine learning and computer vision techniques analyze hand gestures to recognize sign language alphabets and words</li>
                         <li>Translates recognized signs into readable English text</li>
-                        <li>Bridges communication gap between signers and non-signers</li>
+                        <li>Makes communication easier between sign language users and non-signers</li>
                     </ul>
                 </div>
             </div>
@@ -580,9 +779,10 @@
                     <h3>Deepfake Detection</h3>
                     <ul>
                         <li>Python, OpenCV, Flask, HTML-CSS-JavaScript, Firebase</li>
-                        <li>AI-powered deepfake detection system</li>
-                        <li>Web-based interface for easy access</li>
-                        <li>Real-time video and image analysis</li>
+                        <li>Web-based system that detects whether an image or video is real or manipulated</li>
+                        <li>Retrieves original authentic image if available online or in cloud sources</li>
+                        <li>Redirects users to official government portals to quickly report and remove deepfake content</li>
+                        <li>Addresses rapid spread of deepfake content with quick detection and easy reporting</li>
                     </ul>
                 </div>
             </div>
@@ -592,8 +792,33 @@
                     <ul>
                         <li>HTML-CSS-JavaScript, React, Python, Flask, MongoDB, Firebase</li>
                         <li>Connects NGOs and care homes to exchange resources without money</li>
+                        <li>Enables post-based requests and offers for full or partial support</li>
                         <li>Allows the public to view needs and contact NGOs directly</li>
                         <li>Solves resource-sharing inefficiency among NGOs</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>NavAble</h3>
+                    <ul>
+                        <li>HTML, CSS, JavaScript, React.js, Google Maps JavaScript API, Firebase</li>
+                        <li>Accessibility-first maps showing whether places and routes are usable before people travel</li>
+                        <li>Empowers people with disabilities to move independently using verified, real-time accessibility information</li>
+                        <li>Promotes inclusive infrastructure by turning accessibility data into visibility and accountability</li>
+                        <li>Addresses reliability concerns for people with disabilities when traveling</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="project-card">
+                <div class="project-content">
+                    <h3>Digitalizing Sikkim Monasteries</h3>
+                    <ul>
+                        <li>3D Scanning, Photogrammetry, HTML/CSS/JS, VR, Cloud Storage, GIS Mapping</li>
+                        <li>Digitally preserves Sikkim's monasteries through virtual documentation and online access</li>
+                        <li>Enables remote learning and cultural tourism without physical limitations</li>
+                        <li>Protects heritage from degradation and long-term loss</li>
+                        <li>Addresses cultural loss of ancient monasteries due to limited digital preservation</li>
                     </ul>
                 </div>
             </div>
@@ -637,16 +862,16 @@
                 <p>💻 Won places in numerous hackathons</p>
             </div>
             <div class="achievement-card">
+                <p>🎯 Selected in SIH Stage 3 out of 68,000+ teams</p>
+            </div>
+            <div class="achievement-card">
                 <p>🦈 1st Runner-up in Shark Tank Business Pitching Ideas</p>
             </div>
             <div class="achievement-card">
                 <p>🚀 Selected to showcase project at Bengaluru Tech Summit</p>
             </div>
             <div class="achievement-card">
-                <p>🤖 Built voice/smartphone-controlled autonomous car for exhibition</p>
-            </div>
-            <div class="achievement-card">
-                <p>🎯 SIH Quarter Finals Finalist</p>
+                <p>🤖 Successfully built voice/smartphone-controlled autonomous car for exhibition</p>
             </div>
         </div>
     </section>
@@ -669,6 +894,38 @@
     </footer>
 
     <script>
+        // Create animated background particles
+        function createParticles() {
+            const colors = ['rgba(52, 152, 219, 0.4)', 'rgba(155, 89, 182, 0.4)', 'rgba(52, 152, 219, 0.2)'];
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 60 + 20;
+                const leftPos = Math.random() * 100;
+                const duration = Math.random() * 20 + 15;
+                const delay = Math.random() * 5;
+                
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = leftPos + '%';
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = duration + 's';
+                particle.style.animationDelay = delay + 's';
+                
+                document.body.appendChild(particle);
+            }
+        }
+
+        // Create geometric background
+        const geoBg = document.createElement('div');
+        geoBg.className = 'geometric-bg';
+        document.body.appendChild(geoBg);
+        
+        createParticles();
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
